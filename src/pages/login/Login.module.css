@@ -1,0 +1,51 @@
+.loginForm {
+  max-width: 360px;
+  margin: 60px auto;
+  padding: 20px;
+}
+
+.loginForm fieldset {
+  border: 1px solid black;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.loginForm legend {
+  font-size: 1.5em;
+  padding: 10px;
+}
+
+.loginForm label {
+  display: block;
+  margin: 30px 0;
+}
+
+.loginForm input {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 6px;
+  font-size: 1em;
+  color: #777;
+  border: none;
+  border-bottom: 1px solid black;
+}
+
+.loginForm button {
+  margin-top: 40px;
+  float: right;
+  padding: 6px 12px;
+  border-radius: 10px;
+  color: #fff;
+  background-color: #007bff;
+  border: 1px solid #007bff;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.loginForm button:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}

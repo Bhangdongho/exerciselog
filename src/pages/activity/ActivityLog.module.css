@@ -1,0 +1,27 @@
+.container {
+  padding: 20px;
+}
+
+.activityList {
+  margin-top: 20px;
+}
+
+.activityItem {
+  background-color: #f9f9f9;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.noData {
+  color: #888;
+  font-size: 1.2em;
+  text-align: center;
+}
+
+.h2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
