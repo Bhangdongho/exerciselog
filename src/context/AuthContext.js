@@ -1,34 +1,23 @@
-import { createContext, useContext, useEffect, useReducer } from "react";
+import React, { createContext, useEffect, useReducer } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { appAuth } from "../firebase/config";
 
-// context를 객체를 생성합니다.
-const AuthContext = createContext();
+export const AuthContext = createContext();
 
 const authReducer = (state, action) => {
   switch (action.type) {
-    case "login":
-      return { ...state, user: action.payload };
-    case "logout":
-      return { ...state, user: null };
-    case "isAuthReady":
+    case "LOGIN":
+      return { ...state, user: action.payload, isAuthReady: true };
+    case "LOGOUT":
+      return { ...state, user: null, isAuthReady: true };
+    case "AUTH_IS_READY":
       return { ...state, user: action.payload, isAuthReady: true };
     default:
       return state;
   }
 };
 
-// useAuthContext 훅 정의
-const useAuthContext = () => {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error("useAuthContext must be used within an AuthProvider");
-  }
-  return context;
-};
-
-// context를 객체를 구독할 컴포넌트의 묶음 범위를 설정합니다.
-const AuthContextProvider = ({ children }) => {
+export const AuthContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, {
     user: null,
     isAuthReady: false,
@@ -36,17 +25,14 @@ const AuthContextProvider = ({ children }) => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(appAuth, (user) => {
-      dispatch({ type: "isAuthReady", payload: user });
+      dispatch({ type: "AUTH_IS_READY", payload: user });
+      unsubscribe();
     });
-    return unsubscribe;
   }, []);
 
-  console.log("user state: ", state);
   return (
     <AuthContext.Provider value={{ ...state, dispatch }}>
       {children}
     </AuthContext.Provider>
   );
 };
-
-export { AuthContext, AuthContextProvider, useAuthContext };

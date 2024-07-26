@@ -1,5 +1,29 @@
+/* WorkoutLog.module.css */
+
 .container {
   padding: 20px;
+  background-color: var(--background-color); /* 배경 색상 통일 */
+}
+
+.dateFilter {
+  margin-bottom: 20px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dateInput {
+  padding: 10px;
+  font-size: 1em;
+  margin: 0 5px;
+  border: 1px solid var(--border-color); /* 테두리 색상 통일 */
+  border-radius: var(--border-radius); /* 둥근 모서리 통일 */
+}
+
+.dateSeparator {
+  font-size: 1.2em;
+  margin: 0 10px;
 }
 
 .activityList {
@@ -7,11 +31,13 @@
 }
 
 .activityItem {
-  background-color: #f9f9f9;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  margin-bottom: 10px;
+  background-color: #fff; /* 배경 색상 통일 */
+  padding: 15px;
+  border: 1px solid var(--border-color); /* 테두리 색상 통일 */
+  border-radius: var(--border-radius); /* 둥근 모서리 통일 */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 통일 */
+  margin-bottom: 15px; /* 여백 통일 */
+  position: relative;
 }
 
 .noData {
@@ -24,4 +50,44 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 1.5rem; /* 제목 폰트 크기 통일 */
+  color: var(--text-color); /* 텍스트 색상 통일 */
+}
+
+.dateTime {
+  font-size: 1em;
+  color: var(--text-color); /* 텍스트 색상 통일 */
+}
+
+.deleteButton {
+  background-color: #ff704d;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px; /* 둥근 모서리 통일 */
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 0.8em;
+  transition: background-color 0.3s; /* 호버 효과 추가 */
+}
+
+.deleteButton:hover {
+  background-color: #ff5722;
+}
+
+.workoutPost {
+  margin-top: 10px;
+}
+
+.workoutContent {
+  font-size: 1.1em;
+  margin-bottom: 5px;
+  color: var(--text-color); /* 텍스트 색상 통일 */
+}
+
+.detailedContent {
+  font-size: 1em;
+  color: #666; /* 텍스트 색상 통일 */
 }

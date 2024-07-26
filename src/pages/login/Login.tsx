@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useLogin } from "../../hooks/useLogin";
 import styles from "./Login.module.css";
 
@@ -6,10 +7,17 @@ const Login: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const { login, error, isPending } = useLogin();
+  const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    login(email, password);
+
+    const success = await login(email, password);
+    if (success) {
+      navigate("/"); // 로그인 성공 시 홈 화면으로 리다이렉트
+    } else {
+      alert("로그인 실패했습니다."); // 로그인 실패 시 알림 창 표시
+    }
   };
 
   return (
@@ -42,7 +50,6 @@ const Login: React.FC = () => {
         <button type="submit" className={styles.btn} disabled={isPending}>
           {isPending ? "Loading..." : "로그인"}
         </button>
-        {error && <p>{error}</p>}
       </fieldset>
     </form>
   );

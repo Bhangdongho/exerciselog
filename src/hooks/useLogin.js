@@ -15,11 +15,12 @@ export const useLogin = () => {
     try {
       const res = await signInWithEmailAndPassword(appAuth, email, password);
       dispatch({ type: "login", payload: res.user });
-      setError(null);
       setIsPending(false);
+      return true; // 로그인 성공 시 true 반환
     } catch (err) {
       setError(err.message);
       setIsPending(false);
+      return false; // 로그인 실패 시 false 반환
     }
   };
 

@@ -21,16 +21,13 @@ const Signup: React.FC = () => {
     }
   };
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    signup(email, password, displayName);
-  };
-
-  useEffect(() => {
-    if (!isPending && !error) {
+    const success = await signup(email, password, displayName);
+    if (success) {
       navigate("/"); // 회원가입 성공 시 홈 화면으로 이동
     }
-  }, [isPending, error, navigate]);
+  };
 
   return (
     <form className={styles.signup_form} onSubmit={handleSubmit}>

@@ -1,5 +1,8 @@
+/* WorkoutLog.module.css */
+
 .container {
   padding: 20px;
+  background-color: var(--background-color); /* 추가: 배경 색상 일치 */
 }
 
 .calendar {
@@ -15,21 +18,26 @@
 .input {
   padding: 10px;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: var(--border-radius); /* 둥근 모서리 */
 }
 
 .button {
   padding: 10px;
-  background-color: #32cd32;
+  background-color: var(--primary-color); /* 버튼 색상 */
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: var(--border-radius); /* 둥근 모서리 */
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
+.button.active {
+  background-color: #007bff;
+  color: white;
+}
+
 .button:hover {
-  background-color: #228b22;
+  background-color: var(--button-hover-color); /* 버튼 호버 색상 */
 }
 
 .logs {
@@ -37,11 +45,13 @@
 }
 
 .logItem {
-  background-color: #f9f9f9;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  margin-bottom: 10px;
+  background-color: #fff; /* 배경 색상 */
+  padding: 15px; /* 패딩 */
+  border: 1px solid var(--border-color); /* 테두리 색상 */
+  border-radius: var(--border-radius); /* 둥근 모서리 */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 */
+  margin-bottom: 15px; /* 각 항목 간의 여백 */
+  position: relative;
 }
 
 .noData {
@@ -51,7 +61,77 @@
 }
 
 .h2 {
-  display: flex; /* Flexbox 사용 */
-  justify-content: center; /* 수평 가운데 정렬 */
-  align-items: center; /* 수직 가운데 정렬 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.detailedWorkoutContainer {
+  margin-top: 10px;
+}
+
+.buttonContainer {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.categoryButton {
+  padding: 8px 16px;
+  background-color: #f0f0f0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.categoryButton:hover {
+  background-color: #e0e0e0;
+}
+
+.deleteButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 5px;
+  background-color: #ff704d;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.deleteButton:hover {
+  background-color: #ff5722;
+}
+
+.startTime {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+/* 게시글 내용 스타일 */
+.workoutContent {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 8px; /* workoutContent와 detailedContent 사이의 간격 조정 */
+}
+
+.detailedContent {
+  font-size: 16px;
+  color: #666;
+  font-weight: bold;
+}
+
+/* 헬스 게시글의 스타일 */
+.workoutPost.healthPost .workoutContent {
+  font-size: 20px;
+  color: var(--primary-color); /* 라임 그린 */
+}
+
+/* 트레드밀 러닝 게시글의 스타일 */
+.workoutPost.treadmillPost .workoutContent {
+  font-size: 12px;
+  color: #007bff;
 }

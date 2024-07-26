@@ -9,16 +9,16 @@ import {
   orderBy,
   getDocs,
   limit,
-} from "firebase/firestore"; // limit 추가
+} from "firebase/firestore";
 import moment from "moment";
-import "moment/locale/ko"; // 추가
+import "moment/locale/ko"; // 한국어 로케일 설정
 import styles from "./Home.module.css";
 
 moment.locale("ko"); // 한국어 로케일 설정
 
 type Log = {
   id: string;
-  date: any;
+  date: Date;
   workout: string;
 };
 
@@ -53,17 +53,13 @@ const Home: React.FC = () => {
       const todayData = todaySnapshot.docs.map((doc) => ({
         ...doc.data(),
         id: doc.id,
-        date: doc.data().date.toDate
-          ? doc.data().date.toDate()
-          : doc.data().date,
+        date: doc.data().date.toDate(), // 수정된 부분
       })) as Log[];
 
       const recentData = recentSnapshot.docs.map((doc) => ({
         ...doc.data(),
         id: doc.id,
-        date: doc.data().date.toDate
-          ? doc.data().date.toDate()
-          : doc.data().date,
+        date: doc.data().date.toDate(), // 수정된 부분
       })) as Log[];
 
       setTodayWorkout(todayData[0] || null);
@@ -79,7 +75,7 @@ const Home: React.FC = () => {
         안녕하세요, {user?.displayName}님!
       </h1>
 
-      <div className={styles.section}>
+      <div className={styles.sectionUp}>
         <h2>오늘의 운동 계획</h2>
         {todayWorkout ? (
           <div className={styles.workoutPlan}>
@@ -103,7 +99,16 @@ const Home: React.FC = () => {
             recentActivities.map((activity) => (
               <div key={activity.id} className={styles.activityItem}>
                 <p>{moment(activity.date).format("YYYY.MM.DD (dddd)")}</p>
-                <p>{activity.workout}</p>
+                <div className={styles.workoutPost}>
+                  <div className={styles.workoutContent}>
+                    운동 내용 : {activity.workout.split("\n")[0]}{" "}
+                    {/* 운동 내용 */}
+                  </div>
+                  <div className={styles.detailedContent}>
+                    상세기록 : {activity.workout.split("\n")[1]}{" "}
+                    {/* 상세 기록 */}
+                  </div>
+                </div>
               </div>
             ))
           )}

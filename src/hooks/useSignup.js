@@ -19,12 +19,15 @@ export const useSignup = () => {
         password
       );
       await updateProfile(res.user, { displayName });
+
       dispatch({ type: "signup", payload: res.user });
+      setIsPending(false);
       setError(null);
-      setIsPending(false);
+      return true; // 회원가입 성공 시 true 반환
     } catch (err) {
-      setError(err.message);
+      setError(err.message || "Something went wrong");
       setIsPending(false);
+      return false; // 회원가입 실패 시 false 반환
     }
   };
 
