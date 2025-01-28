@@ -1,137 +1,144 @@
-/* WorkoutLog.module.css */
-
-.container {
-  padding: 20px;
-  background-color: var(--background-color); /* 추가: 배경 색상 일치 */
+.workout-log-container {
+  --primary-color: #3b82f6; /* 파란색 */
+  --secondary-color: #374151; /* 다크 그레이 */
+  --border-color: #e5e7eb; /* 라이트 그레이 */
+  --text-color: #374151; /* 다크 그레이 */
+  --background-color: #ffffff; /* 화이트 */
+  --hover-background-color: #f3f4f6; /* 밝은 그레이 */
+  --button-hover: #2563eb; /* 버튼 호버 블루 */
+  --danger-color: #ef4444; /* 빨간색 */
+  --radius: 8px;
 }
 
-.calendar {
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: var(--background-color); /* 전체 배경 화이트 */
+}
+
+.h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
   margin-bottom: 20px;
+  color: var(--text-color);
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
+  background-color: var(--background-color);
+  padding: 20px;
+  border-radius: 6px;
 }
 
 .input {
   padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: var(--border-radius); /* 둥근 모서리 */
+  font-size: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--primary-color);
 }
 
 .button {
-  padding: 10px;
-  background-color: var(--primary-color); /* 버튼 색상 */
+  padding: 10px 20px;
+  background-color: var(--primary-color);
   color: white;
   border: none;
-  border-radius: var(--border-radius); /* 둥근 모서리 */
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.button.active {
-  background-color: #007bff;
-  color: white;
+  transition: transform 0.2s; /* 색상 변경 없음 */
 }
 
 .button:hover {
-  background-color: var(--button-hover-color); /* 버튼 호버 색상 */
+  transform: scale(1.05); /* 크기 확대 */
+}
+
+.categoryButton {
+  padding: 10px 16px;
+  background-color: #e5e7eb; /* 옅은 회색 */
+  color: var(--text-color);
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: transform 0.2s; /* 색상 변경 없음 */
+  margin-right: 8px; /* 버튼들 사이 간격 추가 */
+  margin-bottom: 5px;
+}
+
+.categoryButton:hover {
+  transform: translateY(-2px); /* 위로 살짝 이동 */
 }
 
 .logs {
   margin-top: 20px;
+  border: 1px solid var(--border-color); /* logs 컨테이너에만 테두리 추가 */
+  border-radius: 6px;
+  padding: 20px;
+  background-color: var(--background-color); /* 컨테이너 배경 화이트 */
 }
 
 .logItem {
-  background-color: #fff; /* 배경 색상 */
-  padding: 15px; /* 패딩 */
-  border: 1px solid var(--border-color); /* 테두리 색상 */
-  border-radius: var(--border-radius); /* 둥근 모서리 */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 */
-  margin-bottom: 15px; /* 각 항목 간의 여백 */
-  position: relative;
+  padding: 20px;
+  background-color: var(--background-color);
+  margin-bottom: 20px;
+  border-radius: var(--radius);
+  position: relative; /* 수정, 삭제 버튼을 절대 위치로 배치하기 위한 상대 위치 */
 }
 
-.noData {
-  color: #888;
-  font-size: 1.2em;
-  text-align: center;
-}
-
-.h2 {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.detailedWorkoutContainer {
-  margin-top: 10px;
-}
-
-.buttonContainer {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 10px;
-}
-
-.categoryButton {
-  padding: 8px 16px;
-  background-color: #f0f0f0;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.categoryButton:hover {
-  background-color: #e0e0e0;
-}
-
-.deleteButton {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  padding: 5px;
-  background-color: #ff704d;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.deleteButton:hover {
-  background-color: #ff5722;
+.dateTime {
+  font-size: 0.9rem;
+  color: black;
 }
 
 .startTime {
+  font-weight: bold; /* 시작 시간을 볼드 처리 */
+  color: var(--text-color);
+}
+
+/* 수정, 삭제 버튼 스타일 */
+.editButton,
+.deleteButton {
+  padding: 6px 10px;
+  font-size: 0.9rem;
   font-weight: 600;
-  font-size: 1.1rem;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: transform 0.2s; /* 색상 변경 없음 */
+  position: absolute; /* 절대 위치 */
+  top: 20px; /* 컨테이너 위에서 간격 */
 }
 
-/* 게시글 내용 스타일 */
+.editButton {
+  background-color: var(--primary-color);
+  right: 70px; /* 오른쪽 끝에서 간격 설정 */
+}
+
+.editButton:hover {
+  transform: scale(1.05); /* 크기 확대 */
+}
+
+.deleteButton {
+  background-color: red; /* 기본 상태 빨간색 */
+  right: 20px; /* 오른쪽 끝에서 간격 설정 */
+}
+
+.deleteButton:hover {
+  transform: scale(1.05); /* 크기 확대 */
+}
+
 .workoutContent {
-  font-size: 14px;
-  color: #333;
-  margin-bottom: 8px; /* workoutContent와 detailedContent 사이의 간격 조정 */
-}
-
-.detailedContent {
-  font-size: 16px;
-  color: #666;
   font-weight: bold;
-}
-
-/* 헬스 게시글의 스타일 */
-.workoutPost.healthPost .workoutContent {
   font-size: 20px;
-  color: var(--primary-color); /* 라임 그린 */
-}
-
-/* 트레드밀 러닝 게시글의 스타일 */
-.workoutPost.treadmillPost .workoutContent {
-  font-size: 12px;
-  color: #007bff;
 }

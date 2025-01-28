@@ -40,6 +40,11 @@ const Nav: React.FC = () => {
               </Link>
             </li>
             <li className={styles.list_item}>
+              <Link to="/analysis" className={styles.link}>
+                운동 분석
+              </Link>
+            </li>
+            <li className={styles.list_item}>
               <strong className={styles.strong}>
                 환영합니다 {user.displayName}님!
               </strong>

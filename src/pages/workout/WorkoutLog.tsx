@@ -8,6 +8,7 @@ import {
   orderBy,
   getDocs,
   addDoc,
+  updateDoc,
   deleteDoc,
   doc,
 } from "firebase/firestore";
@@ -15,7 +16,6 @@ import useAuthContext from "../../hooks/useAuthContext";
 import ExerciseInfo from "../../components/ExerciseInfo";
 import styles from "./WorkoutLog.module.css";
 
-// `ExerciseInfo` 컴포넌트와 호환되는 타입 정의
 type ExerciseLog = {
   id: string;
   date: any;
@@ -34,60 +34,70 @@ const WorkoutLog: React.FC = () => {
   const [selectedTime, setSelectedTime] = useState<string>("");
   const [selectedLogs, setSelectedLogs] = useState<Log[]>([]);
   const [detailedWorkoutInput, setDetailedWorkoutInput] = useState<string>("");
+  const [editMode, setEditMode] = useState<boolean>(false);
+  const [editingLog, setEditingLog] = useState<Log | null>(null);
 
   useEffect(() => {
     if (!user) return;
 
     const fetchLogs = async () => {
-      const ref = collection(appFireStore, "workouts");
-      const q = query(
-        ref,
-        where("userId", "==", user.uid),
-        orderBy("date", "desc")
-      );
+      try {
+        const ref = collection(appFireStore, "workouts");
+        const q = query(
+          ref,
+          where("userId", "==", user.uid),
+          orderBy("date", "desc")
+        );
 
-      const snapshot = await getDocs(q);
-      const data = snapshot.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
-        date: doc.data().date.toDate
-          ? doc.data().date.toDate()
-          : doc.data().date,
-      })) as Log[];
-      setLogs(data);
+        const snapshot = await getDocs(q);
+        const data = snapshot.docs.map((doc) => ({
+          ...doc.data(),
+          id: doc.id,
+          date: doc.data().date?.toDate
+            ? doc.data().date.toDate()
+            : moment(doc.data().date).toDate(),
+        })) as Log[];
+        setLogs(data);
+      } catch (error) {
+        console.error("Error fetching logs: ", error);
+      }
     };
 
     fetchLogs();
   }, [user]);
 
   const handleDateChange = (date: Date, workouts: ExerciseLog[]) => {
-    setSelectedDate(date);
-    setSelectedLogs(workouts as Log[]);
+    if (moment(date).isSame(selectedDate, "day")) {
+      setSelectedDate(null);
+      setSelectedLogs([]);
+    } else {
+      setSelectedDate(date);
+      setSelectedLogs(workouts as Log[]);
+    }
   };
 
-  const handleTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedTime(e.target.value);
+  const handleTimeChange = (time: string) => {
+    setSelectedTime(time);
   };
 
   const handleAddWorkout = async () => {
     if (!user || !selectedDate || !selectedTime || !workout) return;
 
-    const dateTime = new Date(selectedDate);
-    const timeParts = selectedTime.split(":");
-    dateTime.setHours(parseInt(timeParts[0], 10));
-    dateTime.setMinutes(parseInt(timeParts[1], 10));
-
-    // 두 입력 필드를 결합하여 하나의 workoutLog 문자열 생성
-    const combinedWorkout = `${workout}\n${detailedWorkoutInput}`;
-
-    const newLog: Log = {
-      date: dateTime,
-      workout: combinedWorkout,
-      userId: user.uid,
-      id: "", // id를 빈 문자열로 초기화 (Firestore에서 받아올 것이므로)
-    };
-
     try {
+      const dateTime = new Date(selectedDate);
+      const timeParts = selectedTime.split(":");
+      dateTime.setHours(parseInt(timeParts[0], 10));
+      dateTime.setMinutes(parseInt(timeParts[1], 10));
+
+      const combinedWorkout = `${workout}\n${detailedWorkoutInput}`;
+
+      const newLog: Log = {
+        date: dateTime,
+        workout: combinedWorkout,
+        userId: user.uid,
+        id: "",
+      };
+
       const docRef = await addDoc(collection(appFireStore, "workouts"), newLog);
       setLogs([{ ...newLog, id: docRef.id }, ...logs]);
       setWorkout("");
@@ -99,21 +109,34 @@ const WorkoutLog: React.FC = () => {
     }
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setWorkout(e.target.value);
+  const handleEditWorkout = async () => {
+    if (!editingLog || !user) return;
+
+    try {
+      const updatedWorkout = `${workout}\n${detailedWorkoutInput}`;
+      await updateDoc(doc(appFireStore, "workouts", editingLog.id), {
+        workout: updatedWorkout,
+      });
+
+      const updatedLogs = logs.map((log) =>
+        log.id === editingLog.id ? { ...log, workout: updatedWorkout } : log
+      );
+      setLogs(updatedLogs);
+      setEditMode(false);
+      setEditingLog(null);
+      setWorkout("");
+      setDetailedWorkoutInput("");
+    } catch (error) {
+      console.error("Error updating workout log: ", error);
+    }
   };
 
-  const handleDetailedWorkoutInputChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setDetailedWorkoutInput(e.target.value);
-  };
-
-  const addCategory = (
-    category: string,
-    inputSetter: React.Dispatch<React.SetStateAction<string>>
-  ) => {
-    inputSetter((prev) => prev + category + " ");
+  const handleEditClick = (log: Log) => {
+    setEditMode(true);
+    setEditingLog(log);
+    const [workoutContent, detailedContent] = log.workout.split("\n");
+    setWorkout(workoutContent || "");
+    setDetailedWorkoutInput(detailedContent || "");
   };
 
   const handleDeleteLog = async (id: string) => {
@@ -126,159 +149,89 @@ const WorkoutLog: React.FC = () => {
     }
   };
 
-  if (!user) {
-    return <div>로그인이 필요합니다.</div>;
-  }
-
   return (
     <div className={styles.container}>
       <h2 className={styles.h2}>운동 기록</h2>
       <ExerciseInfo onDateChange={handleDateChange} />
       {selectedDate && (
         <>
-          <h2>
+          <h2 className={styles.h2}>
             {moment(selectedDate).format("YYYY.MM.DD (dddd)")} 운동 기록 추가
           </h2>
           <div className={styles.form}>
             <div className={styles.buttonContainer}>
-              <button
-                onClick={() => addCategory("헬스", setWorkout)}
-                className={styles.categoryButton}
-              >
-                헬스
-              </button>
-              <button
-                onClick={() => addCategory("홈트", setWorkout)}
-                className={styles.categoryButton}
-              >
-                홈트
-              </button>
-              <button
-                onClick={() => addCategory("등산", setWorkout)}
-                className={styles.categoryButton}
-              >
-                등산
-              </button>
-              <button
-                onClick={() => addCategory("필라테스", setWorkout)}
-                className={styles.categoryButton}
-              >
-                필라테스
-              </button>
-              <button
-                onClick={() => addCategory("수영", setWorkout)}
-                className={styles.categoryButton}
-              >
-                수영
-              </button>
-              <button
-                onClick={() => addCategory("러닝", setWorkout)}
-                className={styles.categoryButton}
-              >
-                러닝
-              </button>
-              <button
-                onClick={() => addCategory("테니스", setWorkout)}
-                className={styles.categoryButton}
-              >
-                테니스
-              </button>
+              {[
+                "헬스",
+                "홈트",
+                "등산",
+                "필라테스",
+                "수영",
+                "러닝",
+                "테니스",
+              ].map((category) => (
+                <button
+                  key={category}
+                  onClick={() => setWorkout((prev) => `${prev}${category} `)}
+                  className={styles.categoryButton}
+                >
+                  {category}
+                </button>
+              ))}
             </div>
             <input
               type="text"
               placeholder="운동 내용을 입력하세요"
               value={workout}
-              onChange={handleInputChange}
+              onChange={(e) => setWorkout(e.target.value)}
               className={styles.input}
             />
             <p className={styles.startTime}>시작 시간</p>
             <input
               type="time"
               value={selectedTime || ""}
-              onChange={handleTimeChange}
+              onChange={(e) => handleTimeChange(e.target.value)}
               className={styles.input}
             />
-            <h3>상세 기록 추가</h3>
+            <h3 className={styles.h2}>상세 기록 추가</h3>
             <div className={styles.buttonContainer}>
-              <button
-                onClick={() =>
-                  addCategory("트레드밀 러닝", setDetailedWorkoutInput)
-                }
-                className={styles.categoryButton}
-              >
-                트레드밀 러닝
-              </button>
-              <button
-                onClick={() =>
-                  addCategory("벤치 프레스", setDetailedWorkoutInput)
-                }
-                className={styles.categoryButton}
-              >
-                벤치 프레스
-              </button>
-              <button
-                onClick={() => addCategory("크런치", setDetailedWorkoutInput)}
-                className={styles.categoryButton}
-              >
-                크런치
-              </button>
-              <button
-                onClick={() =>
-                  addCategory("랫 풀다운", setDetailedWorkoutInput)
-                }
-                className={styles.categoryButton}
-              >
-                랫 풀다운
-              </button>
-              <button
-                onClick={() =>
-                  addCategory("데드 프레스", setDetailedWorkoutInput)
-                }
-                className={styles.categoryButton}
-              >
-                데드 프레스
-              </button>
-              <button
-                onClick={() =>
-                  addCategory("바벨 스쿼트", setDetailedWorkoutInput)
-                }
-                className={styles.categoryButton}
-              >
-                바벨 스쿼트
-              </button>
-              <button
-                onClick={() =>
-                  addCategory("덤벨 숄더 프레스", setDetailedWorkoutInput)
-                }
-                className={styles.categoryButton}
-              >
-                덤벨 숄더 프레스
-              </button>
-              <button
-                onClick={() => addCategory("싸이클", setDetailedWorkoutInput)}
-                className={styles.categoryButton}
-              >
-                싸이클
-              </button>
-              <button
-                onClick={() =>
-                  addCategory("레그 레이즈", setDetailedWorkoutInput)
-                }
-                className={styles.categoryButton}
-              >
-                레그 레이즈
-              </button>
+              {[
+                "트레드밀 러닝",
+                "벤치 프레스",
+                "크런치",
+                "랫 풀다운",
+                "데드 프레스",
+                "바벨 스쿼트",
+                "덤벨 숄더 프레스",
+                "싸이클",
+                "레그 레이즈",
+              ].map((detail) => (
+                <button
+                  key={detail}
+                  onClick={() =>
+                    setDetailedWorkoutInput((prev) => `${prev}${detail} `)
+                  }
+                  className={styles.categoryButton}
+                >
+                  {detail}
+                </button>
+              ))}
             </div>
             <input
               type="text"
               placeholder="상세 운동 내용을 입력하세요"
               value={detailedWorkoutInput}
-              onChange={handleDetailedWorkoutInputChange}
+              onChange={(e) => setDetailedWorkoutInput(e.target.value)}
               className={styles.input}
             />
-            <button onClick={handleAddWorkout} className={styles.button}>
-              추가
-            </button>
+            {editMode ? (
+              <button onClick={handleEditWorkout} className={styles.button}>
+                수정
+              </button>
+            ) : (
+              <button onClick={handleAddWorkout} className={styles.button}>
+                추가
+              </button>
+            )}
           </div>
         </>
       )}
@@ -288,20 +241,32 @@ const WorkoutLog: React.FC = () => {
         ) : (
           selectedLogs.map((log) => (
             <div key={log.id} className={styles.logItem}>
-              <button
-                onClick={() => handleDeleteLog(log.id)}
-                className={styles.deleteButton}
-              >
-                삭제
-              </button>
-              <p>{moment(log.date).format("YY-MM-DD (ddd) HH:mm")}</p>
-              <div className={styles.workoutPost}>
-                <div className={styles.workoutContent}>
-                  {log.workout.split("\n")[0]} {/* 운동 내용 */}
+              <div className={styles.header}>
+                <p className={styles.dateTime}>
+                  {moment(log.date).format("YY-MM-DD (ddd) HH:mm")}
+                </p>
+                <div className={styles.actionButtons}>
+                  <button
+                    onClick={() => handleEditClick(log)}
+                    className={styles.editButton}
+                  >
+                    수정
+                  </button>
+                  <button
+                    onClick={() => handleDeleteLog(log.id)}
+                    className={styles.deleteButton}
+                  >
+                    삭제
+                  </button>
                 </div>
-                <div className={styles.detailedContent}>
-                  {log.workout.split("\n")[1]} {/* 상세 기록 */}
-                </div>
+              </div>
+              <div>
+                <p className={styles.workoutContent}>
+                  {log.workout.split("\n")[0]}
+                </p>
+                <p className={styles.detailedContent}>
+                  {log.workout.split("\n")[1]}
+                </p>
               </div>
             </div>
           ))

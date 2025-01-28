@@ -1,0 +1,130 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6); /* 어두운 배경 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  background: #ffffff; /* 흰 배경 */
+  padding: 30px;
+  border-radius: 16px; /* 둥근 모서리 */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* 그림자 */
+  width: 100%;
+  max-width: 500px;
+  animation: fadeIn 0.3s ease-in-out; /* 등장 애니메이션 */
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.modalTitle {
+  font-size: 1.8rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #2c3e50; /* 어두운 네이비 */
+}
+
+.formGroup {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column; /* 세로 배치 */
+}
+
+.input,
+.textarea {
+  width: calc(100% - 16px); /* 좌우 균형을 맞추기 위해 양쪽 여백 확보 */
+  padding: 12px 15px; /* 충분한 내부 패딩 */
+  font-size: 1rem;
+  border: none; /* 테두리 제거 */
+  border-radius: 12px; /* 둥근 모서리 */
+  background: #f7f7f7; /* 연한 회색 배경 */
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1); /* 내면 그림자 */
+}
+
+.input:focus,
+.textarea:focus {
+  background: #ffffff; /* 포커스 시 흰 배경 */
+  box-shadow: 0 0 8px rgba(50, 205, 50, 0.5); /* 초록색 포커스 효과 */
+  outline: none;
+}
+
+.textarea {
+  resize: none; /* 크기 조정 비활성화 */
+  height: 120px;
+}
+
+.buttonContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.categoryButton,
+.detailButton {
+  padding: 6px 12px;
+  background-color: #34d399; /* 밝은 초록색 */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.categoryButton:hover,
+.detailButton:hover {
+  background-color: #059669; /* 더 진한 초록색 */
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+}
+
+.saveButton {
+  padding: 12px 20px;
+  background-color: #34d399; /* 밝은 초록색 복원 */
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.saveButton:hover {
+  background-color: #059669; /* 더 진한 초록색 */
+}
+
+.cancelButton {
+  padding: 12px 20px;
+  background-color: #e5e7eb; /* 연한 회색 */
+  color: black;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 12px;
+}
+
+.cancelButton:hover {
+  background-color: #d1d5db; /* 더 진한 회색 */
+}

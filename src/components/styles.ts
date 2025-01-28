@@ -12,106 +12,115 @@ export const StyledCalendarWrapper = styled.div`
   .react-calendar {
     width: 100%;
     border: none;
-    border-radius: 0.5rem;
-    box-shadow: 4px 2px 10px 0px rgba(0, 0, 0, 0.13);
-    padding: 3% 5%;
-    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px 30px;
+    background-color: #f9f9f9;
   }
 
   /* 전체 폰트 컬러 */
   .react-calendar__month-view {
     abbr {
-      color: #000; /* 글자색을 검정색으로 설정 */
+      color: #374151; /* 다크 그레이 */
     }
   }
 
-  /* 네비게이션 가운데 정렬 */
+  /* 네비게이션 가운데 정렬 및 스타일 */
   .react-calendar__navigation {
     justify-content: center;
+    margin-bottom: 20px;
   }
 
-  /* 네비게이션 폰트 설정 */
   .react-calendar__navigation button {
     font-weight: bold;
-    font-size: 2rem;
-    color: #000;
+    font-size: 1.2rem;
+    color: #111827;
+    background: transparent;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    transition: background-color 0.3s;
+    cursor: pointer;
   }
 
-  /* 네비게이션 버튼 컬러 */
-  .react-calendar__navigation button:focus {
-    background-color: black;
+  .react-calendar__navigation button:hover {
+    background-color: #e5e7eb;
   }
 
-  /* 네비게이션 비활성화 됐을때 스타일 */
+  /* 네비게이션 버튼 비활성화 상태 */
   .react-calendar__navigation button:disabled {
-    background-color: white;
-    color: black;
+    color: #9ca3af;
+    cursor: not-allowed;
   }
 
-  /* 년/월 상단 네비게이션 칸 크기 줄이기 */
+  /* 네비게이션 년/월 라벨 스타일 */
   .react-calendar__navigation__label {
     flex-grow: 0 !important;
+    font-size: 1.1rem;
+    font-weight: 600;
   }
 
-  /* 요일 밑줄 제거 */
+  /* 요일 스타일 */
   .react-calendar__month-view__weekdays abbr {
     text-decoration: none;
-    font-weight: 800;
+    font-weight: 700;
+    color: #6b7280;
+    font-size: 1rem;
   }
 
-  /* 일요일에만 빨간 폰트 */
   .react-calendar__month-view__weekdays__weekday--weekend abbr[title="일요일"] {
-    color: red;
+    color: #ef4444; /* 빨간색 */
   }
 
-  /* 오늘 날짜 폰트 컬러 */
+  /* 오늘 날짜 스타일 */
   .react-calendar__tile--now {
     background: none;
     abbr {
-      color: #000;
+      color: #2563eb; /* 파란색 */
+      font-weight: bold;
     }
   }
 
-  /* 네비게이션 월 스타일 적용 */
-  .react-calendar__year-view__months__month {
-    border-radius: 0.8rem;
-    background-color: #f0f0f0;
-    padding: 0;
-  }
-
-  /* 네비게이션 현재 월 스타일 적용 */
-  .react-calendar__tile--hasActive {
-    background-color: #000;
-    abbr {
-      color: white;
-    }
-  }
-
-  /* 일 날짜 간격 */
+  /* 날짜 스타일 */
   .react-calendar__tile {
-    padding: 5px 0px 18px;
+    padding: 15px 10px;
+    font-size: 1rem;
+    color: #374151;
+    border-radius: 8px;
+    transition: background-color 0.3s, transform 0.2s;
     position: relative;
-    color: #000; /* 글자색을 검정색으로 설정 */
   }
 
-  /* 네비게이션 월 스타일 적용 */
+  .react-calendar__tile:hover,
+  .react-calendar__tile:focus {
+    background-color: #e5e7eb;
+    transform: scale(1.05);
+  }
+
+  /* 선택된 날짜 스타일 */
+  .react-calendar__tile--active {
+    background-color: #3b82f6;
+    color: white;
+    font-weight: bold;
+  }
+
+  /* 월 스타일 */
   .react-calendar__year-view__months__month {
     flex: 0 0 calc(33.3333% - 10px) !important;
-    margin-inline-start: 5px !important;
-    margin-inline-end: 5px !important;
-    margin-block-end: 10px;
-    padding: 20px 6.6667px;
-    font-size: 0.9rem;
+    margin: 5px;
+    padding: 15px;
+    font-size: 1rem;
     font-weight: 600;
-    color: black;
+    color: #111827;
+    border-radius: 8px;
+    background-color: #f3f4f6;
+    transition: background-color 0.3s, transform 0.2s;
+    cursor: pointer;
   }
 
-  /* 선택한 날짜 스타일 적용 */
-  .react-calendar__tile:enabled:hover,
-  .react-calendar__tile:enabled:focus,
-  .react-calendar__tile--active {
-    background-color: #32cd32;
-    border-radius: 0.3rem;
+  .react-calendar__year-view__months__month:hover {
+    background-color: #e5e7eb;
+    transform: scale(1.05);
   }
 `;
 
@@ -120,46 +129,48 @@ export const StyledCalendar = styled(Calendar)``;
 /* 오늘 버튼 스타일 */
 export const StyledDate = styled.div`
   position: absolute;
-  right: 7%;
-  top: 6%;
-  background-color: #000;
+  right: 10%;
+  top: 10%;
+  background-color: #3b82f6;
   color: white;
-  width: 18%;
-  min-width: fit-content;
-  height: 1.5rem;
-  text-align: center;
-  margin: 0 auto;
-  line-height: 1.6rem;
-  border-radius: 15px;
-  font-size: 0.8rem;
-  font-weight: 800;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #2563eb;
+  }
 `;
 
 /* 오늘 날짜에 텍스트 삽입 스타일 */
 export const StyledToday = styled.div`
-  font-size: x-small;
-  color: #000;
+  font-size: 0.8rem;
+  color: #374151;
   font-weight: 600;
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
 `;
 
 /* 출석한 날짜에 점 표시 스타일 */
 export const StyledDot = styled.div`
-  background-color: #000;
+  background-color: #10b981; /* 밝은 초록색 */
   border-radius: 50%;
-  width: 0.3rem;
-  height: 0.3rem;
+  width: 6px;
+  height: 6px;
   position: absolute;
-  top: 60%;
+  top: 70%;
   left: 50%;
   transform: translateX(-50%);
 `;
 
 /* 표시된 날짜 스타일 */
 export const MarkedTile = styled.div`
-  background-color: blue !important;
+  background-color: #3b82f6 !important;
   color: white !important;
+  border-radius: 8px;
 `;

@@ -6,6 +6,7 @@ import Signup from "./pages/signup/Signup";
 import WorkoutLog from "./pages/workout/WorkoutLog";
 import ActivityLog from "./pages/activity/ActivityLog";
 import Nav from "./components/Nav";
+import Analysis from "./components/Analysis";
 
 const App: React.FC = () => {
   return (
@@ -17,6 +18,7 @@ const App: React.FC = () => {
         <Route path="/signup" element={<Signup />} />
         <Route path="/workout-log" element={<WorkoutLog />} />
         <Route path="/activity-log" element={<ActivityLog />} />
+        <Route path="/analysis" element={<Analysis />} />
       </Routes>
     </div>
   );

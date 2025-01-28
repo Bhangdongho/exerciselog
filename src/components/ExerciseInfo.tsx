@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import moment from "moment";
 import { appFireStore } from "../firebase/config";
 import { collection, query, where, getDocs } from "firebase/firestore";
@@ -9,7 +9,6 @@ import {
   StyledDate,
   StyledToday,
   StyledDot,
-  MarkedTile,
 } from "./styles";
 
 type ValuePiece = Date | null;
@@ -29,36 +28,41 @@ const ExerciseInfo: React.FC<ExerciseInfoProps> = ({ onDateChange }) => {
   const { user } = useAuthContext();
   const today = new Date();
   const [date, setDate] = useState<Value>(today);
-  const [activeStartDate, setActiveStartDate] = useState<Date | null>(
-    new Date()
-  );
+  const [activeStartDate, setActiveStartDate] = useState<Date | null>(today);
   const [logs, setLogs] = useState<Log[]>([]);
   const [markedDates, setMarkedDates] = useState<string[]>([]);
 
-  useEffect(() => {
+  // Firestore에서 데이터 가져오기
+  const fetchLogs = useCallback(async () => {
     if (!user) return;
 
-    const fetchLogs = async () => {
+    try {
       const ref = collection(appFireStore, "workouts");
       const q = query(ref, where("userId", "==", user.uid));
-
       const snapshot = await getDocs(q);
+
       const data = snapshot.docs.map((doc) => ({
         ...doc.data(),
         id: doc.id,
-        date: doc.data().date.toDate
+        date: doc.data().date?.toDate
           ? doc.data().date.toDate()
-          : doc.data().date,
+          : moment(doc.data().date).toDate(),
       })) as Log[];
+
       setLogs(data);
 
       const dates = data.map((log) => moment(log.date).format("YYYY-MM-DD"));
       setMarkedDates(dates);
-    };
-
-    fetchLogs();
+    } catch (error) {
+      console.error("Error fetching exercise logs: ", error);
+    }
   }, [user]);
 
+  useEffect(() => {
+    fetchLogs();
+  }, [fetchLogs]);
+
+  // 날짜 변경 핸들러
   const handleDateChange = (newDate: Date) => {
     setDate(newDate);
     const selectedLogs = logs.filter(
@@ -69,6 +73,7 @@ const ExerciseInfo: React.FC<ExerciseInfoProps> = ({ onDateChange }) => {
     onDateChange(newDate, selectedLogs);
   };
 
+  // 오늘 날짜로 이동
   const handleTodayClick = () => {
     const today = new Date();
     setActiveStartDate(today);
@@ -90,23 +95,25 @@ const ExerciseInfo: React.FC<ExerciseInfoProps> = ({ onDateChange }) => {
         next2Label={null}
         prev2Label={null}
         minDetail="year"
-        activeStartDate={activeStartDate === null ? undefined : activeStartDate}
+        activeStartDate={activeStartDate || undefined}
         onActiveStartDateChange={({ activeStartDate }) =>
           setActiveStartDate(activeStartDate)
         }
         tileContent={({ date, view }) => {
-          let html = [];
-          if (
-            view === "month" &&
-            date.getMonth() === today.getMonth() &&
-            date.getDate() === today.getDate()
-          ) {
-            html.push(<StyledToday key={"today"}>오늘</StyledToday>);
-          }
-          if (markedDates.includes(moment(date).format("YYYY-MM-DD"))) {
-            html.push(<StyledDot key={moment(date).format("YYYY-MM-DD")} />);
-          }
-          return <>{html}</>;
+          if (view !== "month") return null;
+
+          const formattedDate = moment(date).format("YYYY-MM-DD");
+          return (
+            <>
+              {date.getDate() === today.getDate() &&
+                date.getMonth() === today.getMonth() && (
+                  <StyledToday key="today">오늘</StyledToday>
+                )}
+              {markedDates.includes(formattedDate) && (
+                <StyledDot key={formattedDate} />
+              )}
+            </>
+          );
         }}
         tileClassName={({ date, view }) => {
           if (

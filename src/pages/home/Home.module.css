@@ -1,113 +1,84 @@
 :root {
-  --primary-color: #32cd32; /* 라임 그린 */
-  --secondary-color: #228b22; /* 숲 속의 그린 */
-  --text-color: #2c3e50; /* 어두운 네이비 */
-  --button-color: #228b22; /* 숲 속의 그린 */
-  --button-hover-color: #2e8b57; /* 다크 씨 푸른 색 */
-  --border-radius: 8px; /* 둥근 모서리 */
-  --background-color: #f9f9f9; /* 연한 회색 배경 */
-  --border-color: #ddd; /* 연한 회색 테두리 */
-  --divider-color: #e0e0e0; /* 게시글 구분선 색상 */
-  --divider-thickness: 1px; /* 게시글 구분선 두께 */
+  --primary-color: #32cd32;
+  --text-color: #2c3e50;
+  --border-color: #ddd;
+  --background-color: #ffffff;
+  --hover-background: #f3f4f6;
+  --button-hover-color: #228b22;
+  --box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  --radius: 12px;
 }
 
+/* 전체 컨테이너 */
 .container {
+  max-width: 900px;
+  margin: 0 auto;
   padding: 20px;
   background-color: var(--background-color);
+  border-radius: var(--radius);
+  box-shadow: var(--box-shadow);
 }
 
+/* 환영 메시지 */
 .welcomeMessage {
   font-size: 2rem;
   font-weight: bold;
   text-align: center;
   color: var(--text-color);
+  margin-bottom: 30px;
+}
+
+/* 섹션 스타일 */
+.section,
+.sectionUp {
+  margin-bottom: 30px;
+  padding: 20px;
+  background-color: var(--background-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  box-shadow: var(--box-shadow);
+}
+
+.sectionTitle {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: var(--text-color);
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* 오늘의 운동 계획 */
+.workoutPlan {
+  padding: 20px;
+  background-color: var(--hover-background);
+  border-radius: var(--radius);
+  box-shadow: var(--box-shadow);
   margin-bottom: 20px;
 }
 
-.section {
-  margin-bottom: 30px;
-}
-
-.sectionUp {
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* 가운데 정렬 */
-  padding: 20px;
-  background-color: #fff; /* 배경 색상 */
-  border: 1px solid var(--border-color); /* 테두리 색상 */
-  border-radius: var(--border-radius); /* 둥근 모서리 */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 */
-  margin-bottom: 30px;
-}
-
-.section h2 {
-  font-size: 1.5rem;
-  color: var(--text-color);
+.workoutPlan .date {
+  font-size: 1.2rem;
+  font-weight: 600;
   margin-bottom: 10px;
 }
 
-.sectionUp h2 {
-  text-align: center; /* 최근 활동 제목 가운데 정렬 */
+.workoutPlan .workout {
+  font-size: 1rem;
+  color: var(--text-color);
 }
 
-.workoutPlan,
-.activityItem {
-  background-color: #fff;
-  padding: 15px;
-  border: 1px solid var(--border-color);
-  border-radius: var(--border-radius);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-bottom: 15px; /* 각 항목 간의 여백 */
-}
-
-.workoutPlan {
-  /* 특정 스타일이 필요한 경우 추가 */
-}
-
-.recentActivities {
-  display: flex;
-  flex-direction: column;
-  gap: 15px; /* 각 게시글 간의 간격 */
-}
-
-.activityItem {
-  background-color: #fff; /* 배경 색상 */
-  padding: 15px; /* 패딩 */
-  border: 1px solid var(--border-color); /* 테두리 색상 */
-  border-radius: var(--border-radius); /* 둥근 모서리 */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 */
-  margin-bottom: 15px; /* 각 항목 간의 여백 */
-}
-
-.activityItem .activityHeader {
-  font-size: 1.2rem; /* 헤더 폰트 크기 */
-  font-weight: bold; /* 헤더 폰트 굵기 */
-  color: var(--text-color); /* 텍스트 색상 */
-  margin-bottom: 10px; /* 헤더와 내용 사이의 여백 */
-}
-
-.activityItem .activityContent {
-  font-size: 1rem; /* 내용 폰트 크기 */
-  color: var(--text-color); /* 텍스트 색상 */
-  line-height: 1.5; /* 줄 간격 */
-}
-
-.activityItem .activityContent .detailedContent {
-  margin-top: 10px; /* 상세 기록과 운동 내용 사이의 여백 */
-  font-style: italic; /* 이탤릭체 */
-  color: #666; /* 상세 기록 색상 */
-}
-
+/* 버튼 */
 .button {
   display: inline-block;
-  padding: 10px 20px;
-  background-color: var(--primary-color);
+  padding: 12px 20px;
+  font-size: 1rem;
+  font-weight: bold;
   color: white;
+  background-color: var(--primary-color);
   border: none;
-  border-radius: var(--border-radius);
+  border-radius: var(--radius);
   text-decoration: none;
   text-align: center;
-  cursor: pointer;
   transition: background-color 0.3s, transform 0.2s;
 }
 
@@ -116,19 +87,86 @@
   transform: scale(1.05);
 }
 
-.button:active {
-  transform: scale(0.98);
+.noWorkoutPlan {
+  text-align: center;
 }
 
-/* 구분선 스타일 */
-.section:not(:last-child) {
-  border-bottom: var(--divider-thickness) solid var(--divider-color);
-  padding-bottom: 15px; /* 구분선과 아래 콘텐츠 간의 여백 */
-  margin-bottom: 15px; /* 구분선과 아래 섹션 간의 여백 */
+/* 최근 활동 */
+.recentActivities {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-.activityItem p {
-  margin-top: 0; /* 날짜와 관련된 내용의 여백 제거 */
-  font-size: 1.5rem; /* 날짜의 글꼴 크기 조정 */
-  color: var(--text-color); /* 텍스트 색상 */
+.activityItem {
+  padding: 20px;
+  background-color: var(--background-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  box-shadow: var(--box-shadow);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.activityItem:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.date {
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--text-color);
+  margin-bottom: 10px;
+}
+
+.workoutPost {
+  margin-top: 10px;
+}
+
+.workoutContent,
+.detailedContent {
+  font-size: 1rem;
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+.detailedContent {
+}
+
+.recommendedPlan {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: var(--hover-background);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  box-shadow: var(--box-shadow);
+  text-align: center; /* 텍스트 중심 정렬 */
+}
+
+.recommendedTitle {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--text-color);
+  margin-bottom: 15px;
+}
+
+.recommendedCard {
+  padding: 15px;
+  background-color: var(--background-color);
+  border-radius: var(--radius);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--box-shadow);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.recommendedCard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.recommendedText {
+  font-size: 1rem;
+  color: var(--text-color);
+  line-height: 1.8;
+  word-break: keep-all; /* 긴 텍스트를 적절히 줄 바꿈 */
 }

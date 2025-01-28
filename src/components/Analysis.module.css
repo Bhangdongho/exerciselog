@@ -1,0 +1,82 @@
+/* 전체 컨테이너 */
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  color: #374151; /* 다크 그레이 */
+}
+
+/* 페이지 제목 */
+.title {
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 30px;
+  color: #2563eb; /* 파란색 */
+}
+
+/* 섹션 스타일 */
+.section {
+  margin-bottom: 30px;
+  padding: 20px;
+  background-color: #f9f9f9; /* 밝은 회색 */
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* 섹션 제목 */
+.sectionTitle {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #1f2937; /* 딥 네이비 */
+  text-align: center;
+}
+
+/* 섹션 내용 */
+.sectionContent {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: #374151; /* 다크 그레이 */
+  text-align: justify; /* 가독성 향상 */
+}
+
+/* 데이터 없을 때 */
+.noData {
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #9ca3af; /* 미드 그레이 */
+}
+
+/* 버튼 스타일 */
+.button {
+  display: inline-block;
+  padding: 12px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: white;
+  background-color: #3b82f6;
+  border: none;
+  border-radius: 12px;
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.button:hover {
+  background-color: #2563eb;
+  transform: scale(1.05);
+}
+
+/* 카드 호버 효과 */
+.section:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}

@@ -1,0 +1,28 @@
+.container {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.categoryButton {
+  padding: 10px 15px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #374151;
+  background-color: #f3f4f6;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.categoryButton:hover {
+  background-color: #e5e7eb;
+}
+
+.categoryButton.active {
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  transform: scale(1.05);
+}
