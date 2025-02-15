@@ -1,59 +1,76 @@
+/* ✅ 네비게이션 바 - 전체 너비 적용 */
 .nav {
+  width: 100vw; /* 브라우저 전체 너비 */
+  position: fixed; /* 상단 고정 */
+  top: 0;
+  left: 0;
+  background-color: var(--primary-color);
+  z-index: 1000; /* 항상 최상위에 위치 */
+}
+
+/* ✅ 내부 컨테이너 - 내용 중앙 정렬 */
+.nav_container {
+  max-width: 1200px; /* 내용 최대 크기 */
+  margin: 0 auto;
+  padding: 16px 32px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: var(--primary-color); /* 라임 그린 */
-  padding: 15px 30px;
-  box-shadow: var(--box-shadow);
 }
 
+/* ✅ 로고 스타일 */
 .tit {
-  color: #ffffff; /* 화이트로 고정 */
+  color: #ffffff;
   font-size: 1.8rem;
   font-weight: bold;
-  text-transform: uppercase; /* 대문자 */
-  letter-spacing: 2px; /* 글자 간격 */
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }
 
+/* ✅ 네비게이션 리스트 */
 .list_nav {
   display: flex;
-  gap: 20px; /* 리스트 간 간격 */
+  gap: 20px;
   align-items: center;
-  list-style: none; /* 리스트 스타일 제거 */
-  margin: 0; /* 리스트 기본 여백 제거 */
-  padding: 0; /* 리스트 기본 패딩 제거 */
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
+/* ✅ 네비게이션 리스트 아이템 */
 .list_item {
-  list-style: none; /* 리스트 스타일 제거 (개별 아이템에도 추가) */
+  list-style: none;
 }
 
+/* ✅ 링크 스타일 */
 .link {
-  color: #ffffff; /* 링크 텍스트 색상 고정 */
+  color: #ffffff;
   text-decoration: none;
   font-size: 1rem;
   font-weight: 600;
-  padding: 8px 16px;
+  padding: 10px 18px;
   border-radius: var(--border-radius);
   transition: background-color 0.3s, transform 0.2s;
 }
 
 .link:hover {
-  background-color: rgba(255, 255, 255, 0.2); /* hover 시 배경 */
+  background-color: rgba(255, 255, 255, 0.2);
   transform: translateY(-2px);
 }
 
+/* ✅ 환영 메시지 */
 .strong {
   font-weight: bold;
-  color: #ffffff; /* 환영 메시지 색상도 화이트로 고정 */
+  color: #ffffff;
 }
 
+/* ✅ 네비게이션 버튼 */
 .button {
-  padding: 8px 16px;
+  padding: 10px 18px;
   font-size: 1rem;
   font-weight: bold;
-  color: #ffffff; /* 버튼 텍스트 화이트 */
-  background-color: var(--secondary-color); /* 숲 속의 그린 */
+  color: #ffffff;
+  background-color: var(--secondary-color);
   border: none;
   border-radius: var(--border-radius);
   cursor: pointer;
@@ -61,6 +78,6 @@
 }
 
 .button:hover {
-  background-color: #1e6f3f; /* 더 어두운 초록 */
+  background-color: #1e6f3f;
   transform: scale(1.05);
 }

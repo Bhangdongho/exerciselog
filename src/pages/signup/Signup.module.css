@@ -1,51 +1,75 @@
+/* ✅ 회원가입 폼 */
 .signup_form {
-  max-width: 360px;
+  max-width: 400px;
   margin: 60px auto;
-  padding: 20px;
+  padding: 24px;
+  padding-top: 140px;
+  background-color: var(--background-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
 }
 
+/* ✅ 입력 필드 그룹 */
 .signup_form fieldset {
-  border: 1px solid black;
-  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
   padding: 20px;
   margin-bottom: 20px;
 }
 
+/* ✅ 폼 제목 */
 .signup_form legend {
-  font-size: 1.5em;
+  font-size: 1.5rem;
+  font-weight: bold;
   padding: 10px;
+  color: var(--text-color);
 }
 
+/* ✅ 입력 필드 라벨 */
 .signup_form label {
   display: block;
-  margin: 30px 0;
+  margin: 20px 0 10px;
+  font-weight: 600;
+  color: var(--text-color);
 }
 
+/* ✅ 입력 필드 스타일 */
 .signup_form input {
   display: block;
   width: 100%;
   box-sizing: border-box;
-  padding: 8px 6px;
-  font-size: 1em;
-  color: #777;
-  border: none;
-  border-bottom: 1px solid black;
+  padding: 10px 12px;
+  font-size: 1rem;
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  background-color: var(--hover-background-color);
+  transition: border-color 0.3s, box-shadow 0.2s;
 }
 
+.signup_form input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 8px rgba(37, 99, 235, 0.5);
+  outline: none;
+}
+
+/* ✅ 회원가입 버튼 */
 .signup_form button {
-  margin-top: 40px;
-  float: right;
-  padding: 6px 12px;
-  border-radius: 10px;
-  color: #fff;
-  background-color: #007bff;
-  border: 1px solid #007bff;
+  margin-top: 20px;
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
   font-weight: bold;
+  text-align: center;
+  border: none;
+  border-radius: var(--border-radius);
+  background-color: var(--primary-color);
+  color: white;
   cursor: pointer;
   transition: background-color 0.3s, transform 0.2s;
 }
 
 .signup_form button:hover {
-  background-color: #0056b3;
+  background-color: var(--button-hover);
   transform: scale(1.05);
 }

@@ -1,11 +1,17 @@
+/* ✅ 상세 버튼 컨테이너 */
 .container {
   display: flex;
-  gap: 10px;
   flex-wrap: wrap;
+  justify-content: center; /* 중앙 정렬 */
+  gap: 12px; /* 버튼 간격 조정 */
 }
 
+/* ✅ 상세 버튼 스타일 */
 .detailButton {
-  padding: 10px 15px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 20px; /* 버튼 크기 확장 */
   font-size: 1rem;
   font-weight: bold;
   color: #374151;
@@ -13,16 +19,32 @@
   border: 1px solid #ddd;
   border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s;
+  transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
 }
 
+/* ✅ 버튼 호버 효과 */
 .detailButton:hover {
   background-color: #e5e7eb;
+  transform: translateY(-2px); /* 버튼 살짝 올라감 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 호버 시 그림자 추가 */
 }
 
+/* ✅ 활성화된 버튼 */
 .detailButton.active {
   background-color: #3b82f6;
   color: white;
   border: none;
   transform: scale(1.05);
+}
+
+/* ✅ 반응형 (모바일 대응) */
+@media (max-width: 768px) {
+  .container {
+    gap: 8px; /* 모바일에서는 간격 줄이기 */
+  }
+
+  .detailButton {
+    padding: 10px 16px; /* 모바일에서 버튼 조금 작게 */
+    font-size: 0.9rem;
+  }
 }

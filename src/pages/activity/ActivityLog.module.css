@@ -1,21 +1,24 @@
+/* ✅ 전역 스타일 */
 :root {
-  --primary-color: #32cd32;
-  --text-color: #2c3e50;
-  --border-color: #ddd;
-  --border-radius: 12px;
-  --box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  --hover-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
-  --background-color: #ffffff;
-  --hover-background-color: #f9fafb;
+  --primary-color: #32cd32; /* 기본 녹색 */
+  --text-color: #2c3e50; /* 기본 텍스트 색상 */
+  --border-color: #ddd; /* 테두리 색상 */
+  --border-radius: 12px; /* 둥근 테두리 */
+  --box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* 기본 그림자 */
+  --hover-shadow: 0 6px 15px rgba(0, 0, 0, 0.15); /* 호버 그림자 */
+  --background-color: #ffffff; /* 배경색 */
+  --hover-background-color: #f9fafb; /* 호버 배경 */
 }
 
+/* ✅ 전체 컨테이너 */
 .container {
-  padding: 20px;
-  background-color: var(--background-color);
-  border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow);
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 24px;
+  padding-top: 140px;
 }
 
+/* ✅ 제목 스타일 */
 .title {
   font-size: 2rem;
   font-weight: bold;
@@ -24,6 +27,7 @@
   margin-bottom: 20px;
 }
 
+/* ✅ 날짜 필터 스타일 */
 .dateFilter {
   display: flex;
   justify-content: center;
@@ -38,12 +42,12 @@
 }
 
 .dateInput {
-  padding: 8px 12px;
+  padding: 10px 14px;
   font-size: 1rem;
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius);
   background-color: var(--hover-background-color);
-  transition: box-shadow 0.3s, transform 0.2s;
+  transition: border-color 0.3s, box-shadow 0.2s;
 }
 
 .dateInput:focus {
@@ -53,6 +57,7 @@
   outline: none;
 }
 
+/* ✅ 필터 버튼 */
 .filterButtons {
   display: flex;
   justify-content: center;
@@ -62,7 +67,7 @@
 }
 
 .filterButton {
-  padding: 10px 15px;
+  padding: 12px 18px;
   font-size: 1rem;
   font-weight: bold;
   color: var(--text-color);
@@ -84,12 +89,14 @@
   transform: scale(1.05);
 }
 
+/* ✅ 활동 리스트 */
 .activityList {
   margin-top: 20px;
 }
 
+/* ✅ 개별 활동 카드 */
 .activityItem {
-  padding: 15px;
+  padding: 20px;
   background-color: var(--background-color);
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius);
@@ -103,6 +110,7 @@
   transform: translateY(-5px);
 }
 
+/* ✅ 헤더 스타일 */
 .header {
   display: flex;
   justify-content: space-between;
@@ -115,6 +123,7 @@
   color: var(--text-color);
 }
 
+/* ✅ 수정 & 삭제 버튼 */
 .actionButtons {
   display: flex;
   gap: 10px;
@@ -122,7 +131,7 @@
 
 .editButton,
 .deleteButton {
-  padding: 6px 12px;
+  padding: 8px 14px;
   font-size: 0.9rem;
   color: #fff;
   border: none;
@@ -149,6 +158,7 @@
   transform: scale(1.05);
 }
 
+/* ✅ 운동 기록 */
 .workoutPost {
   margin-top: 10px;
 }
@@ -165,6 +175,7 @@
   color: var(--text-color);
 }
 
+/* ✅ 사용자 지정 날짜 선택 */
 .customDateRange {
   display: flex;
   gap: 10px;
@@ -178,7 +189,7 @@
 }
 
 .customDateRange input {
-  padding: 8px 10px;
+  padding: 10px 14px;
   font-size: 0.9rem;
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius);
@@ -193,41 +204,42 @@
   outline: none;
 }
 
+/* ✅ 커스텀 날짜 입력 */
 .customDateInputs {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 15px; /* 라벨과 입력 필드 간격 */
-  margin-top: 15px; /* 상단 여백 */
+  gap: 15px;
+  margin-top: 15px;
 }
 
 .customDateInputs label {
   font-size: 1rem;
   font-weight: 500;
-  color: var(--text-color); /* 다크 그레이 */
+  color: var(--text-color);
   display: flex;
-  flex-direction: column; /* 텍스트와 입력 필드 세로 정렬 */
-  gap: 5px; /* 텍스트와 입력 필드 간격 */
-  text-align: left; /* 텍스트 왼쪽 정렬 */
+  flex-direction: column;
+  gap: 5px;
+  text-align: left;
 }
 
 .customDateInputs input[type="date"] {
-  padding: 10px;
+  padding: 12px 16px;
   font-size: 0.9rem;
-  border: 1px solid var(--border-color); /* 테두리 색상 */
-  border-radius: var(--border-radius); /* 모서리 둥글게 */
-  background-color: var(--hover-background-color); /* 연한 회색 배경 */
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  background-color: var(--hover-background-color);
   transition: box-shadow 0.3s, transform 0.2s;
 }
 
 .customDateInputs input[type="date"]:focus {
-  border-color: var(--primary-color); /* 포커스 시 강조 색상 */
-  box-shadow: 0 0 8px rgba(50, 205, 50, 0.5); /* 포커스 시 그림자 효과 */
-  transform: scale(1.02); /* 포커스 시 약간 확대 */
+  border-color: var(--primary-color);
+  box-shadow: 0 0 8px rgba(50, 205, 50, 0.5);
+  transform: scale(1.02);
   outline: none;
 }
 
 .customDateInputs input[type="date"]::placeholder {
-  color: #9ca3af; /* 회색 플레이스홀더 색상 */
+  color: #9ca3af;
   font-style: italic;
 }

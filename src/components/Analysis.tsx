@@ -7,8 +7,9 @@ import styles from "./Analysis.module.css";
 
 const Analysis: React.FC = () => {
   const { user } = useAuthContext();
-  const [summary, setSummary] = useState<string>("");
-  const [analysis, setAnalysis] = useState<string>("");
+  const [summary, setSummary] = useState<string[]>([]);
+  const [analysis, setAnalysis] = useState<string[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     if (!user) return;
@@ -21,10 +22,10 @@ const Analysis: React.FC = () => {
         const snapshot = await getDocs(q);
         const logs = snapshot.docs.map((doc) => doc.data());
 
-        const promptSummary = `다음 운동 기록을 요약해줘:\n${JSON.stringify(
+        const promptSummary = `다음 운동 기록을 요약해줘. 가독성을 위해 각 요약 내용을 개행하여 JSON 배열 형태로 만들어줘:\n${JSON.stringify(
           logs.slice(-5)
         )}`;
-        const promptAnalysis = `이 운동 기록을 분석하고 개선점을 알려줘:\n${JSON.stringify(
+        const promptAnalysis = `이 운동 기록을 분석하고 개선점을 알려줘. 가독성을 위해 각 분석 내용을 개행하여 JSON 배열 형태로 만들어줘:\n${JSON.stringify(
           logs
         )}`;
 
@@ -33,10 +34,12 @@ const Analysis: React.FC = () => {
           callChatGPT(promptAnalysis),
         ]);
 
-        setSummary(summaryResult);
-        setAnalysis(analysisResult);
+        setSummary(JSON.parse(summaryResult));
+        setAnalysis(JSON.parse(analysisResult));
       } catch (error) {
         console.error("Error fetching or analyzing logs:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -46,18 +49,40 @@ const Analysis: React.FC = () => {
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>운동 기록 분석</h1>
-      <div className={styles.section}>
-        <h2 className={styles.sectionTitle}>운동 기록 요약</h2>
-        <p className={styles.sectionContent}>
-          {summary || "요약을 불러오는 중..."}
-        </p>
-      </div>
-      <div className={styles.section}>
-        <h2 className={styles.sectionTitle}>운동 기록 분석</h2>
-        <p className={styles.sectionContent}>
-          {analysis || "분석을 불러오는 중..."}
-        </p>
-      </div>
+      {loading ? (
+        <p className={styles.loading}>분석 중입니다... 잠시만 기다려 주세요.</p>
+      ) : (
+        <>
+          <div className={styles.section}>
+            <h2 className={styles.sectionTitle}>운동 기록 요약</h2>
+            {summary.length > 0 ? (
+              <ul className={styles.list}>
+                {summary.map((item, index) => (
+                  <li key={index} className={styles.listItem}>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className={styles.noData}>요약할 운동 기록이 없습니다.</p>
+            )}
+          </div>
+          <div className={styles.section}>
+            <h2 className={styles.sectionTitle}>운동 기록 분석</h2>
+            {analysis.length > 0 ? (
+              <ul className={styles.list}>
+                {analysis.map((item, index) => (
+                  <li key={index} className={styles.listItem}>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className={styles.noData}>분석할 운동 기록이 없습니다.</p>
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 };

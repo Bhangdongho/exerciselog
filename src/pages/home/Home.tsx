@@ -101,9 +101,13 @@ const Home: React.FC = () => {
             </Link>
           </div>
         )}
-        <button onClick={handleRecommendPlan} className={styles.button}>
+        <button
+          onClick={handleRecommendPlan}
+          className={`${styles.button} ${styles.recommendButton}`}
+        >
           운동 계획 추천
         </button>
+
         {recommendedPlan && (
           <div className={styles.recommendedPlan}>
             <h3 className={styles.recommendedTitle}>추천 운동 루틴</h3>

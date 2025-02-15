@@ -1,25 +1,24 @@
+/* ✅ 전역 스타일 */
 :root {
-  --primary-color: #32cd32;
-  --text-color: #2c3e50;
-  --border-color: #ddd;
-  --background-color: #ffffff;
-  --hover-background: #f3f4f6;
-  --button-hover-color: #228b22;
-  --box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  --radius: 12px;
+  --primary-color: #32cd32; /* 기본 녹색 */
+  --text-color: #2c3e50; /* 텍스트 색상 */
+  --border-color: #ddd; /* 테두리 색상 */
+  --background-color: #ffffff; /* 배경색 */
+  --hover-background: #f3f4f6; /* 호버 배경 */
+  --button-hover-color: #228b22; /* 버튼 호버 */
+  --box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* 기본 그림자 */
+  --border-radius: 12px; /* 둥근 테두리 */
 }
 
-/* 전체 컨테이너 */
+/* ✅ 전체 컨테이너 */
 .container {
   max-width: 900px;
   margin: 0 auto;
-  padding: 20px;
-  background-color: var(--background-color);
-  border-radius: var(--radius);
-  box-shadow: var(--box-shadow);
+  padding: 24px;
+  padding-top: 140px;
 }
 
-/* 환영 메시지 */
+/* ✅ 환영 메시지 */
 .welcomeMessage {
   font-size: 2rem;
   font-weight: bold;
@@ -28,14 +27,14 @@
   margin-bottom: 30px;
 }
 
-/* 섹션 스타일 */
+/* ✅ 섹션 스타일 */
 .section,
 .sectionUp {
   margin-bottom: 30px;
   padding: 20px;
   background-color: var(--background-color);
   border: 1px solid var(--border-color);
-  border-radius: var(--radius);
+  border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
 }
 
@@ -47,36 +46,63 @@
   text-align: center;
 }
 
-/* 오늘의 운동 계획 */
+/* ✅ 오늘의 운동 계획 */
 .workoutPlan {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
   padding: 20px;
-  background-color: var(--hover-background);
-  border-radius: var(--radius);
+  border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
+  text-align: center;
   margin-bottom: 20px;
+  border: 1px solid var(--border-color);
 }
 
 .workoutPlan .date {
   font-size: 1.2rem;
-  font-weight: 600;
-  margin-bottom: 10px;
-}
-
-.workoutPlan .workout {
-  font-size: 1rem;
+  font-weight: 700;
   color: var(--text-color);
 }
 
-/* 버튼 */
+.workoutPlan .workout {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+/* ✅ 운동 계획이 없을 때 */
+.noWorkoutPlan {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 20px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  text-align: center;
+  border: 1px dashed var(--border-color);
+}
+
+.noWorkoutPlan p {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+/* ✅ 버튼 스타일 */
 .button {
   display: inline-block;
-  padding: 12px 20px;
+  padding: 14px 20px;
   font-size: 1rem;
   font-weight: bold;
   color: white;
   background-color: var(--primary-color);
   border: none;
-  border-radius: var(--radius);
+  border-radius: var(--border-radius);
   text-decoration: none;
   text-align: center;
   transition: background-color 0.3s, transform 0.2s;
@@ -87,11 +113,7 @@
   transform: scale(1.05);
 }
 
-.noWorkoutPlan {
-  text-align: center;
-}
-
-/* 최근 활동 */
+/* ✅ 최근 활동 섹션 */
 .recentActivities {
   display: flex;
   flex-direction: column;
@@ -102,7 +124,7 @@
   padding: 20px;
   background-color: var(--background-color);
   border: 1px solid var(--border-color);
-  border-radius: var(--radius);
+  border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
   transition: transform 0.3s, box-shadow 0.3s;
 }
@@ -112,6 +134,7 @@
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
 }
 
+/* ✅ 날짜 스타일 */
 .date {
   font-size: 1rem;
   font-weight: bold;
@@ -119,6 +142,7 @@
   margin-bottom: 10px;
 }
 
+/* ✅ 운동 기록 */
 .workoutPost {
   margin-top: 10px;
 }
@@ -130,17 +154,15 @@
   line-height: 1.6;
 }
 
-.detailedContent {
-}
-
+/* ✅ 추천 운동 계획 */
 .recommendedPlan {
   margin-top: 20px;
   padding: 20px;
   background-color: var(--hover-background);
   border: 1px solid var(--border-color);
-  border-radius: var(--radius);
+  border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
-  text-align: center; /* 텍스트 중심 정렬 */
+  text-align: center;
 }
 
 .recommendedTitle {
@@ -150,10 +172,11 @@
   margin-bottom: 15px;
 }
 
+/* ✅ 추천 카드 */
 .recommendedCard {
   padding: 15px;
   background-color: var(--background-color);
-  border-radius: var(--radius);
+  border-radius: var(--border-radius);
   border: 1px solid var(--border-color);
   box-shadow: var(--box-shadow);
   transition: transform 0.3s, box-shadow 0.3s;
@@ -164,9 +187,52 @@
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
+/* ✅ 추천 텍스트 */
 .recommendedText {
   font-size: 1rem;
   color: var(--text-color);
   line-height: 1.8;
-  word-break: keep-all; /* 긴 텍스트를 적절히 줄 바꿈 */
+  word-break: keep-all;
+}
+
+/* ✅ 반응형 (모바일 최적화) */
+@media (max-width: 768px) {
+  .container {
+    max-width: 90%;
+    padding: 20px;
+  }
+
+  .title {
+    font-size: 1.8rem;
+  }
+
+  .section {
+    padding: 20px;
+  }
+
+  .button {
+    padding: 12px 18px;
+    font-size: 0.9rem;
+  }
+}
+
+/* ✅ 운동 계획 추천 버튼 (간격 조정) */
+.recommendButton {
+  display: inline-block;
+  padding: 14px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: white;
+  background-color: var(--primary-color);
+  border: none;
+  border-radius: var(--border-radius);
+  text-decoration: none;
+  text-align: center;
+  transition: background-color 0.3s, transform 0.2s;
+  margin-top: 20px; /* 🟢 버튼 위쪽 간격 추가 */
+}
+
+.recommendButton:hover {
+  background-color: var(--button-hover-color);
+  transform: scale(1.05);
 }
