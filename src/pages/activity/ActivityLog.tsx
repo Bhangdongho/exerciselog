@@ -8,12 +8,11 @@ import {
   orderBy,
   getDocs,
   deleteDoc,
-  updateDoc,
   doc,
 } from "firebase/firestore";
 import moment from "moment";
 import "moment/locale/ko";
-import EditModal from "../../components/EditModal";
+import WorkoutModal from "../../components/WorkoutModal"; // 워크아웃 모달 추가
 import styles from "./ActivityLog.module.css";
 
 moment.locale("ko");
@@ -37,6 +36,7 @@ const ActivityLog: React.FC = () => {
     start: "",
     end: "",
   });
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
 
   const fetchActivities = useCallback(async () => {
     if (!user) return;
@@ -114,33 +114,6 @@ const ActivityLog: React.FC = () => {
     applyFilter();
   }, [selectedFilter, customDateRange, applyFilter]);
 
-  const handleSave = async (updatedData: {
-    date: Date;
-    category: string;
-    content: string;
-  }) => {
-    if (!editingLog) return;
-
-    const updatedWorkout = `${updatedData.category}\n${updatedData.content}`;
-
-    try {
-      await updateDoc(doc(appFireStore, "workouts", editingLog.id), {
-        date: updatedData.date,
-        workout: updatedWorkout,
-      });
-      setActivities((prevActivities) =>
-        prevActivities.map((activity) =>
-          activity.id === editingLog.id
-            ? { ...activity, date: updatedData.date, workout: updatedWorkout }
-            : activity
-        )
-      );
-      setEditingLog(null);
-    } catch (error) {
-      console.error("Error updating document: ", error);
-    }
-  };
-
   const handleDelete = async (id: string) => {
     try {
       await deleteDoc(doc(appFireStore, "workouts", id));
@@ -210,11 +183,14 @@ const ActivityLog: React.FC = () => {
           <div className={styles.activityItem} key={activity.id}>
             <div className={styles.header}>
               <p className={styles.dateTime}>
-                {moment(activity.date).format("YYYY.MM.DD (dddd)")}
+                {moment(activity.date).format("YYYY.MM.DD (dddd) HH:mm")}
               </p>
               <div className={styles.actionButtons}>
                 <button
-                  onClick={() => setEditingLog(activity)}
+                  onClick={() => {
+                    setEditingLog(activity);
+                    setModalOpen(true);
+                  }}
                   className={styles.editButton}
                 >
                   수정
@@ -232,19 +208,23 @@ const ActivityLog: React.FC = () => {
                 <strong>{activity.workout.split("\n")[0]}</strong>
               </p>
               <p className={styles.workoutContent}>
-                <strong>운동내용 </strong> {activity.workout.split("\n")[1]}
+                <strong>운동 내용 </strong> {activity.workout.split("\n")[1]}
               </p>
             </div>
           </div>
         ))}
       </div>
-      {editingLog && (
-        <EditModal
-          initialDate={editingLog.date}
-          initialCategory={editingLog.workout.split("\n")[0]}
-          initialContent={editingLog.workout.split("\n")[1]}
-          onSave={handleSave}
-          onClose={() => setEditingLog(null)}
+      {modalOpen && editingLog && (
+        <WorkoutModal
+          selectedDate={editingLog.date}
+          onClose={() => setModalOpen(false)}
+          onLogAdded={(updatedLog) =>
+            setActivities((prevActivities) =>
+              prevActivities.map((activity) =>
+                activity.id === updatedLog.id ? updatedLog : activity
+              )
+            )
+          }
         />
       )}
     </div>

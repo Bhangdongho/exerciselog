@@ -118,24 +118,26 @@ const Home: React.FC = () => {
         )}
       </div>
 
+      {/* ✅ 최근 활동 - ActivityLog 스타일과 통일 */}
       <div className={styles.section}>
         <h2 className={styles.sectionTitle}>최근 활동</h2>
         <div className={styles.recentActivities}>
           {recentActivities.length === 0 ? (
-            <p>최근 활동 기록이 없습니다.</p>
+            <p className={styles.noData}>최근 활동 기록이 없습니다.</p>
           ) : (
             recentActivities.map((activity) => (
               <div key={activity.id} className={styles.activityItem}>
-                <p className={styles.date}>
-                  {moment(activity.date).format("YYYY.MM.DD (dddd)")}
-                </p>
-                <div className={styles.workoutPost}>
-                  <p className={styles.workoutContent}>
-                    <strong>운동 내용 </strong>{" "}
-                    {activity.workout.split("\n")[0]}
+                <div className={styles.header}>
+                  <p className={styles.dateTime}>
+                    {moment(activity.date).format("YYYY.MM.DD (dddd)")}
                   </p>
-                  <p className={styles.detailedContent}>
-                    <strong>상세 기록 </strong>{" "}
+                </div>
+                <div className={styles.workoutPost}>
+                  <p className={styles.workoutCategory}>
+                    <strong>운동:</strong> {activity.workout.split("\n")[0]}
+                  </p>
+                  <p className={styles.workoutContent}>
+                    <strong>상세 내용:</strong>{" "}
                     {activity.workout.split("\n")[1] || "없음"}
                   </p>
                 </div>

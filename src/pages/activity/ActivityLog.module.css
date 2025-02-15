@@ -133,7 +133,8 @@
 .deleteButton {
   padding: 8px 14px;
   font-size: 0.9rem;
-  color: #fff;
+  font-weight: bold;
+  color: white;
   border: none;
   border-radius: var(--border-radius);
   cursor: pointer;
@@ -242,4 +243,36 @@
 .customDateInputs input[type="date"]::placeholder {
   color: #9ca3af;
   font-style: italic;
+}
+
+/* ✅ 반응형 스타일 */
+@media (max-width: 768px) {
+  .container {
+    max-width: 90%;
+    padding: 20px;
+  }
+
+  .title {
+    font-size: 1.8rem;
+  }
+
+  .filterButtons {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .filterButton {
+    padding: 10px;
+    font-size: 0.9rem;
+  }
+
+  .activityItem {
+    padding: 15px;
+  }
+
+  .editButton,
+  .deleteButton {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+  }
 }

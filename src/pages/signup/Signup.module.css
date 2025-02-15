@@ -1,9 +1,8 @@
 /* ✅ 회원가입 폼 */
 .signup_form {
   max-width: 400px;
-  margin: 60px auto;
+  margin: 200px auto; /* 🔥 상단 마진 증가 (기존 60px → 120px) */
   padding: 24px;
-  padding-top: 140px;
   background-color: var(--background-color);
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
@@ -13,38 +12,39 @@
 .signup_form fieldset {
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius);
-  padding: 20px;
-  margin-bottom: 20px;
+  padding: 24px; /* 🔥 내부 패딩 증가 */
+  margin: 0;
 }
 
 /* ✅ 폼 제목 */
 .signup_form legend {
-  font-size: 1.5rem;
+  font-size: 1.6rem; /* 🔥 크기 증가 */
   font-weight: bold;
-  padding: 10px;
+  text-align: center;
   color: var(--text-color);
+  margin-bottom: 16px; /* 🔥 제목과 입력창 간격 증가 */
 }
 
 /* ✅ 입력 필드 라벨 */
 .signup_form label {
   display: block;
-  margin: 20px 0 10px;
-  font-weight: 600;
+  font-size: 1rem;
+  font-weight: bold;
   color: var(--text-color);
+  margin-bottom: 12px; /* 🔥 라벨과 입력창 간격 증가 */
 }
 
 /* ✅ 입력 필드 스타일 */
 .signup_form input {
-  display: block;
-  width: 100%;
-  box-sizing: border-box;
-  padding: 10px 12px;
+  width: calc(100% - 28px);
+  padding: 12px 14px;
   font-size: 1rem;
-  color: var(--text-color);
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius);
   background-color: var(--hover-background-color);
   transition: border-color 0.3s, box-shadow 0.2s;
+  display: block;
+  margin-bottom: 18px; /* 🔥 입력 필드 간 간격 증가 */
 }
 
 .signup_form input:focus {
@@ -55,9 +55,8 @@
 
 /* ✅ 회원가입 버튼 */
 .signup_form button {
-  margin-top: 20px;
   width: 100%;
-  padding: 12px;
+  padding: 14px 18px;
   font-size: 1rem;
   font-weight: bold;
   text-align: center;
@@ -67,9 +66,42 @@
   color: white;
   cursor: pointer;
   transition: background-color 0.3s, transform 0.2s;
+  margin-top: 24px; /* 🔥 버튼 위 간격 증가 */
 }
 
+/* ✅ 버튼 호버 효과 */
 .signup_form button:hover {
   background-color: var(--button-hover);
   transform: scale(1.05);
+}
+
+/* ✅ 버튼 비활성화 (로딩 중) */
+.signup_form button:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ✅ 반응형 디자인 */
+@media (max-width: 480px) {
+  .signup_form {
+    max-width: 90%;
+    margin: 100px auto; /* 🔥 모바일에서도 상단 마진 유지 */
+    padding: 20px;
+  }
+
+  legend {
+    font-size: 1.4rem;
+  }
+
+  input {
+    width: calc(100% - 24px);
+    margin-bottom: 16px; /* 🔥 모바일에서도 입력 필드 간격 증가 */
+  }
+
+  .signup_form button {
+    font-size: 0.9rem;
+    padding: 12px;
+    margin-top: 20px; /* 🔥 버튼 간격 유지 */
+  }
 }
